@@ -8,11 +8,11 @@ class Api::BooksController < ApplicationController
   end
 
   def create
-    book = @author.books.new(books_params)
-    if book.save
-      render json: book
+    @book = @author.books.new(book_params)
+    if @book.save
+      render json: @book
     else
-      render json: {errors: book.errors.full_messages}, status: 422
+      render json: {errors: @book.errors.full_messages}, status: 422
     end
   end
 
@@ -21,11 +21,15 @@ class Api::BooksController < ApplicationController
   end
 
   def update
+    if @book.update(book_params)
+      render json: @book
+    else
+      render json: {errors: @book.errors.full_messages}, status: 422
+    end
+  end
   
-   end
-
    def destroy
-  
+    render json: @book.destroy
    end
 
   private
@@ -38,7 +42,7 @@ class Api::BooksController < ApplicationController
     @book = @author.books.find(params[:id])
   end
 
-  def books_params
+  def book_params
     params.require(:book).permit(:name, :genre)
   end
 

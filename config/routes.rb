@@ -10,8 +10,8 @@ Rails.application.routes.draw do
     get 'authors/:author_id/books', to: 'books#index'
     post 'authors/:author_id/books', to: 'books#create'
     get 'authors/:author_id/books/:id', to: 'books#show'
-    #put
-    #delete
+    put 'authors/:author_id/books/:id', to: 'books#update'
+    delete 'authors/:author_id/books/:id', to: 'books#destroy'
 
   end
 end
